@@ -16,7 +16,7 @@ class Portfolio:
         self.trades = 0
 
     def results(self):
-        print(f'Balance: {self.balance}:.,2f\nFee: {self.fee}\nSlip: {self.slip}\nTake-profit: {self.tp}\nStop-loss: {self.sl}\nFixed: {self.fixed}\nPnl: {self.pnl*100}:,.2f\nTrades: {self.trades}\n')
+        print(f'Balance: {round(self.balance, 2)}\nFee: {self.fee}\nSlip: {self.slip}\nTake-profit: {self.tp}\nStop-loss: {self.sl}\nFixed: {self.fixed}\nPnl: {round(self.pnl*100, 2)}%\nTrades: {self.trades}\n')
 
 
 class Mac:
