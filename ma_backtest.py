@@ -176,6 +176,10 @@ def backtest(history, portfolio, strategy, data, quiet=True):
 
 prices = pd.read_csv('historical_data/257001hXBTUSD.csv')
 
+#####################
+#   DOCUMENTACIÓN   #
+#####################
+
 ####   TRADING    ###################################################################
 #
 # Sea el promedio rapido "fma" y el promedio lento "sma"
