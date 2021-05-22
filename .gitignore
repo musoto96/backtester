@@ -1,1 +1,6 @@
 *.swp
+*~
+lib
+bin
+pyvenv.cfg
+__pycache__/*

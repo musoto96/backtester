@@ -1,3 +1,4 @@
+#!bin/python3
 import numpy as np
 import pandas as pd
 import bitmex
@@ -37,7 +38,6 @@ for i in range(len(raw_pages)):
 
 df = pd.concat(pages)
 df = df.reset_index(drop=True)
-#print(df)
 name = str(n)+period+sym+'.csv'
 
 df.to_csv(f'historical_data/{name}', index=False)

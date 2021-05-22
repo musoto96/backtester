@@ -1,3 +1,4 @@
+#!bin/python3
 import numpy as np
 import pandas as pd
 import json
@@ -121,7 +122,7 @@ class Mac:
         return signals
 
 
-def backtest(history, portfolio, strategy, data):
+def backtest(history, portfolio, strategy, data, quiet=True):
     test = strategy(history, data)
     btsignals = test.historic(portfolio)
     
@@ -143,7 +144,8 @@ def backtest(history, portfolio, strategy, data):
         if position == {}:
             portfolio.balance -= balance * portfolio.fee
             position = new_position
-            print(position, '\n', portfolio.balance, ': ', balance, '\n')
+            if !quiet:
+                print(position, '\n', portfolio.balance, ': ', balance, '\n')
         else:
             pnl = (new_position['price'] - position['price']) / position['price']
 
@@ -155,13 +157,16 @@ def backtest(history, portfolio, strategy, data):
             portfolio.balance -= balance * portfolio.fee
 
             if new_position['subsignal'] != '':
-                print(new_position)
+                if !quiet:
+                    print(new_position)
                 position = {}
             else:
                 position = new_position
-                print(position)
+                if !quiet:
+                    print(position)
 
-            print(pnl, '\n', portfolio.balance, ': ', balance, '\n')
+            if !quiet:
+                print(pnl, '\n', portfolio.balance, ': ', balance, '\n')
 
     portfolio.pnl = total_pnl
     portfolio.trades = len(btsignals)
