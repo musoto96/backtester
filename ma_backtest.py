@@ -199,15 +199,29 @@ prices = pd.read_csv('historical_data/257001hXBTUSD.csv')
 
 ####   USO DEL PROGRAMA    ##########################################################
 #
-# margin:               Tamaño de posición. (default 100 (USD))
+# margin:               Tamaño de posición (default 100 USD).
 # slippage              No implementado.
-# take-profit:          Toma de ganancia. (default 50%)
-# stop-loss:            Corte de pérdidas. (default 1.5%)
-# fee:                  Comision (0.1% en Binance). (default 0.1%)
+# take-profit:          Toma de ganancia (default 50%).
+# stop-loss:            Corte de pérdidas (default 1.5%).
+# fee:                  Comisión (0.1% en Binance) (default 0.1%).
 # fixed:                True si el tamaño de posición sera el mismo, 
 #                         False si el tamaño de posición se acumula.
 #
 #####################################################################################
+
+####   LECTURA DE RESULTADOS    #####################################################
+#
+# Balance:              Balance final
+# Fee                   Comisión utilizada en la prueba
+# Take-profit:          Toma de ganancia utilizada.
+# Stop-loss:            Corte de pérdidas utilizado.
+# Fixed:                Si utilizó posición fija o acumulada
+# Pnl:                  Porcentaje de ganancia/perdida (perdida si es negativo).
+# Trades:               Numero de posiciones abiertas.
+#
+#####################################################################################
+
+
 
 
 my_portfolio = Portfolio(balance = 100,
