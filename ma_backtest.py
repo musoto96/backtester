@@ -16,7 +16,7 @@ class Portfolio:
         self.trades = 0
 
     def results(self):
-        print(f'Balance: {self.balance}\nFee: {self.fee}\nSlip: {self.slip}\nTake-profit: {self.tp}\nStop-loss: {self.sl}\nFixed: {self.fixed}\nPnl: {self.pnl}\nTrades: {self.trades}\n')
+        print(f'Balance: {self.balance}:.,2f\nFee: {self.fee}\nSlip: {self.slip}\nTake-profit: {self.tp}\nStop-loss: {self.sl}\nFixed: {self.fixed}\nPnl: {self.pnl*100}:,.2f\nTrades: {self.trades}\n')
 
 
 class Mac:
@@ -144,7 +144,7 @@ def backtest(history, portfolio, strategy, data, quiet=True):
         if position == {}:
             portfolio.balance -= balance * portfolio.fee
             position = new_position
-            if !quiet:
+            if quiet != True:
                 print(position, '\n', portfolio.balance, ': ', balance, '\n')
         else:
             pnl = (new_position['price'] - position['price']) / position['price']
@@ -157,15 +157,15 @@ def backtest(history, portfolio, strategy, data, quiet=True):
             portfolio.balance -= balance * portfolio.fee
 
             if new_position['subsignal'] != '':
-                if !quiet:
+                if quiet != True:
                     print(new_position)
                 position = {}
             else:
                 position = new_position
-                if !quiet:
+                if quiet != True:
                     print(position)
 
-            if !quiet:
+            if quiet != True:
                 print(pnl, '\n', portfolio.balance, ': ', balance, '\n')
 
     portfolio.pnl = total_pnl
@@ -174,19 +174,46 @@ def backtest(history, portfolio, strategy, data, quiet=True):
 
 
 
-# Usage
 prices = pd.read_csv('historical_data/257001hXBTUSD.csv')
 
-# margin: 100 (USD)
-# slippage: not implemented
-# take-profit: 45%
-# stop-loss: 1.5%
-# fee: 0.1%
+####   TRADING    ###################################################################
+#
+# Sea el promedio rapido "fma" y el promedio lento "sma"
+#  Si fma pasa de:  
+#       fma < sma
+#           a
+#       fma > sma   
+#   Es señal de compra. Si se tenia short abierto, se cierra el short y se abre long.
+#
+#  Si fma pasa de:  
+#       fma > sma
+#           a
+#       fma < sma   
+#   Es señal de venta. Si se tenia long abierto, se cierra el long y se abre short.
+# 
+#  Si en cualquier momento la perdida llega a 1.5% se cierra la posición y se espera
+#   una nueva señal.
+#
+#####################################################################################
+
+
+####   USO DEL PROGRAMA    ##########################################################
+#
+# margin:               Tamaño de posición. (default 100 (USD))
+# slippage              No implementado.
+# take-profit:          Toma de ganancia. (default 50%)
+# stop-loss:            Corte de pérdidas. (default 1.5%)
+# fee:                  Comision (0.1% en Binance). (default 0.1%)
+# fixed:                True si el tamaño de posición sera el mismo, 
+#                         False si el tamaño de posición se acumula.
+#
+#####################################################################################
+
 
 my_portfolio = Portfolio(balance = 100,
         fee = 0.001,
         slip = 0.0,
-        tp = 0.45, 
+        tp = 0.50, 
         sl = 0.015,
         fixed = True)
 
