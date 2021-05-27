@@ -177,55 +177,54 @@ def backtest(history, portfolio, strategy, data, quiet=True):
 prices = pd.read_csv('historical_data/257001hXBTUSD.csv')
 
 #####################
+#                   #
 #   DOCUMENTACIÓN   #
+#                   #
 #####################
 
-####   TRADING    ###################################################################
-#
-# Sea el promedio rapido "fma" y el promedio lento "sma"
-#  Si fma pasa de:  
-#       fma < sma
-#           a
-#       fma > sma   
-#   Es señal de compra. Si se tenia short abierto, se cierra el short y se abre long.
-#
-#  Si fma pasa de:  
-#       fma > sma
-#           a
-#       fma < sma   
-#   Es señal de venta. Si se tenia long abierto, se cierra el long y se abre short.
-# 
-#  Si en cualquier momento la perdida llega a 1.5% se cierra la posición y se espera
-#   una nueva señal.
-#
-#####################################################################################
+####   TRADING    #######################################################################
+#                                                                                       #
+# Sea el promedio rapido "fma" y el promedio lento "sma"                                #
+#  Si fma pasa de:                                                                      # 
+#       fma < sma                                                                       #
+#           a                                                                           #
+#       fma > sma                                                                       #
+#   Es señal de compra. Si se tenia short abierto, se cierra el short y se abre long.   #
+#                                                                                       #
+#  Si fma pasa de:                                                                      #
+#       fma > sma                                                                       #
+#           a                                                                           #
+#       fma < sma                                                                       #
+#   Es señal de venta. Si se tenia long abierto, se cierra el long y se abre short.     #
+#                                                                                       #
+#  Si en cualquier momento la perdida llega al porcentaje de stop-loss se cierra la     #
+#   posición y se espera una nueva señal.                                               #
+#                                                                                       #
+#########################################################################################
 
+####   USO DEL PROGRAMA    ##############################################################
+#                                                                                       #
+# margin:               Tamaño de posición (default 100 USD).                           #
+# slippage              No implementado.                                                #
+# take-profit:          Toma de ganancia (default 50%).                                 #
+# stop-loss:            Corte de pérdidas (default 1.5%).                               #
+# fee:                  Comisión (0.1% en Binance) (default 0.1%).                      #
+# fixed:                True si el tamaño de posición sera el mismo,                    #
+#                         False si el tamaño de posición se acumula.                    #
+#                                                                                       #
+#########################################################################################
 
-####   USO DEL PROGRAMA    ##########################################################
-#
-# margin:               Tamaño de posición (default 100 USD).
-# slippage              No implementado.
-# take-profit:          Toma de ganancia (default 50%).
-# stop-loss:            Corte de pérdidas (default 1.5%).
-# fee:                  Comisión (0.1% en Binance) (default 0.1%).
-# fixed:                True si el tamaño de posición sera el mismo, 
-#                         False si el tamaño de posición se acumula.
-#
-#####################################################################################
-
-####   LECTURA DE RESULTADOS    #####################################################
-#
-# Balance:              Balance final
-# Fee                   Comisión utilizada en la prueba
-# Take-profit:          Toma de ganancia utilizada.
-# Stop-loss:            Corte de pérdidas utilizado.
-# Fixed:                Si utilizó posición fija o acumulada
-# Pnl:                  Porcentaje de ganancia/perdida (perdida si es negativo).
-# Trades:               Numero de posiciones abiertas.
-#
-#####################################################################################
-
-
+####   LECTURA DE RESULTADOS    #########################################################
+#                                                                                       #
+# Balance:              Balance final                                                   #
+# Fee                   Comisión utilizada en la prueba                                 #
+# Take-profit:          Toma de ganancia utilizada.                                     #
+# Stop-loss:            Corte de pérdidas utilizado.                                    #
+# Fixed:                Si utilizó posición fija o acumulada                            #
+# Pnl:                  Porcentaje de ganancia/perdida (perdida si es negativo).        #
+# Trades:               Número de posiciones abiertas.                                  #
+#                                                                                       #
+#########################################################################################
 
 
 my_portfolio = Portfolio(balance = 100,
@@ -233,7 +232,7 @@ my_portfolio = Portfolio(balance = 100,
         slip = 0.0,
         tp = 0.50, 
         sl = 0.015,
-        fixed = True)
+        fixed = False)
 
 # fast-ma: 48; slow-ma: 128
 backtest(prices, my_portfolio, Mac, {'fast': 48, 'slow': 128})
